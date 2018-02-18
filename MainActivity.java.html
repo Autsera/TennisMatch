@@ -1,0 +1,370 @@
+<html>
+<head>
+<title>MainActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,0,255); }
+.s4 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MainActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.example.android.tennismatchtracker; 
+ 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity; 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+</span><span class="s0">import </span><span class="s1">android.view.View; 
+</span><span class="s0">import </span><span class="s1">android.widget.TextView; 
+ 
+ 
+</span><span class="s0">public class </span><span class="s1">MainActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_main); 
+    } 
+ 
+    </span><span class="s2">// tracks Player A Game and Set score</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">gameA = </span><span class="s3">0</span><span class="s1">; 
+    </span><span class="s0">int </span><span class="s1">setA = </span><span class="s3">0</span><span class="s1">; 
+ 
+    </span><span class="s2">// tracks Player B Game and Set score</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">gameB = </span><span class="s3">0</span><span class="s1">; 
+    </span><span class="s0">int </span><span class="s1">setB = </span><span class="s3">0</span><span class="s1">; 
+ 
+    </span><span class="s2">// tracks Player A Points score</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">pointA = </span><span class="s3">0</span><span class="s1">; 
+ 
+    </span><span class="s2">// tracks Player B Points score</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">pointB = </span><span class="s3">0</span><span class="s1">; 
+    </span><span class="s2">// tracks Tie Break or not</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">setTieBreak = </span><span class="s3">0</span><span class="s1">; 
+    </span><span class="s0">int </span><span class="s1">deuce = </span><span class="s3">0</span><span class="s1">; 
+    String advantage = </span><span class="s4">&quot;Adv&quot;</span><span class="s1">; 
+ 
+ 
+    </span><span class="s2">// tracks servesA</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">serveOutA = </span><span class="s3">0</span><span class="s1">; 
+    </span><span class="s0">int </span><span class="s1">serveOutB = </span><span class="s3">0</span><span class="s1">; 
+ 
+ 
+    </span><span class="s2">// * This method is called when player A Serve Out Button is pressed.</span><span class="s1"> 
+ 
+ 
+    </span><span class="s0">public void </span><span class="s1">OutServeA(View view) { 
+        serveOutA = serveOutA + </span><span class="s3">1</span><span class="s1">; 
+        </span><span class="s0">if </span><span class="s1">(serveOutA == </span><span class="s3">2</span><span class="s1">) { 
+            incrementPointB(); 
+        } 
+ 
+    } 
+ 
+    </span><span class="s2">// * This method is called when player B Serve Out Button is pressed.</span><span class="s1"> 
+ 
+ 
+    </span><span class="s0">public void </span><span class="s1">OutServeB(View view) { 
+        serveOutB = serveOutB + </span><span class="s3">1</span><span class="s1">; 
+        </span><span class="s0">if </span><span class="s1">(serveOutB == </span><span class="s3">2</span><span class="s1">) { 
+            incrementPointA(); 
+        } 
+ 
+    } 
+</span><span class="s2">// * This method is called to increment Player A Points Score is pressed.</span><span class="s1"> 
+ 
+    </span><span class="s0">public void </span><span class="s1">incrementPointA() { 
+ 
+        serveOutA = </span><span class="s3">0</span><span class="s1">; 
+        serveOutB = </span><span class="s3">0</span><span class="s1">; 
+        </span><span class="s0">if </span><span class="s1">(setTieBreak == </span><span class="s3">1</span><span class="s1">) { 
+            pointA = pointA + </span><span class="s3">1</span><span class="s1">; 
+            displayPointA(pointA); 
+            </span><span class="s0">if </span><span class="s1">(pointA &gt;= </span><span class="s3">7 </span><span class="s1">&amp;&amp; (pointA - pointB) &gt; </span><span class="s3">1</span><span class="s1">) { 
+                setA = setA + </span><span class="s3">1</span><span class="s1">; 
+                newSet(); 
+            } 
+ 
+        } </span><span class="s0">else if </span><span class="s1">(deuce == </span><span class="s3">1</span><span class="s1">) { 
+            pointA = pointA + </span><span class="s3">1</span><span class="s1">; 
+            </span><span class="s0">if </span><span class="s1">(pointA == </span><span class="s3">2</span><span class="s1">) { 
+                pointA = </span><span class="s3">0</span><span class="s1">; 
+                pointB = </span><span class="s3">0</span><span class="s1">; 
+                deuce = </span><span class="s3">0</span><span class="s1">; 
+                displayPointA(pointA); 
+                displayPointB(pointB); 
+                gameA = gameA + </span><span class="s3">1</span><span class="s1">; 
+                displayGameA(gameA); 
+                </span><span class="s0">if </span><span class="s1">(gameA == </span><span class="s3">6 </span><span class="s1">&amp;&amp; gameB == </span><span class="s3">6</span><span class="s1">) { 
+                    setTieBreak = </span><span class="s3">1</span><span class="s1">; 
+                } </span><span class="s0">else if </span><span class="s1">(gameA &gt;= </span><span class="s3">6 </span><span class="s1">&amp;&amp; (gameA - gameB) &gt; </span><span class="s3">1</span><span class="s1">) { 
+                    setA = setA + </span><span class="s3">1</span><span class="s1">; 
+                    newSet(); 
+                } 
+            } </span><span class="s0">else if </span><span class="s1">(pointB == </span><span class="s3">1</span><span class="s1">) { 
+                pointA = </span><span class="s3">40</span><span class="s1">; 
+                pointB = </span><span class="s3">40</span><span class="s1">; 
+                displayPointA(pointA); 
+                displayPointB(pointB); 
+                pointA = </span><span class="s3">0</span><span class="s1">; 
+                pointB = </span><span class="s3">0</span><span class="s1">; 
+            } </span><span class="s0">else </span><span class="s1">{ 
+                pointB = </span><span class="s3">0</span><span class="s1">; 
+                displayPointA(pointA); 
+                displayPointB(pointB); 
+            } 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            pointA = pointA + </span><span class="s3">15</span><span class="s1">; 
+            </span><span class="s0">if </span><span class="s1">(pointA == </span><span class="s3">45</span><span class="s1">) { 
+                pointA = </span><span class="s3">40</span><span class="s1">; 
+                </span><span class="s0">if </span><span class="s1">(pointB == </span><span class="s3">40</span><span class="s1">) { 
+                    displayPointA(pointA); 
+                    displayPointB(pointB); 
+                    pointA = </span><span class="s3">0</span><span class="s1">; 
+                    pointB = </span><span class="s3">0</span><span class="s1">; 
+                    deuce = </span><span class="s3">1</span><span class="s1">; 
+                } </span><span class="s0">else </span><span class="s1">{ 
+                    displayPointA(pointA); 
+ 
+                } 
+            } </span><span class="s0">else if </span><span class="s1">(pointA &lt; </span><span class="s3">55</span><span class="s1">) { 
+                displayPointA(pointA); 
+                displayPointB(pointB); 
+            } </span><span class="s0">else </span><span class="s1">{ 
+                pointA = </span><span class="s3">0</span><span class="s1">; 
+                pointB = </span><span class="s3">0</span><span class="s1">; 
+                displayPointA(pointA); 
+                displayPointB(pointB); 
+                gameA = gameA + </span><span class="s3">1</span><span class="s1">; 
+                displayGameA(gameA); 
+                </span><span class="s0">if </span><span class="s1">(gameA == </span><span class="s3">6 </span><span class="s1">&amp;&amp; gameB == </span><span class="s3">6</span><span class="s1">) { 
+                    setTieBreak = </span><span class="s3">1</span><span class="s1">; 
+                } </span><span class="s0">else if </span><span class="s1">(gameA &gt;= </span><span class="s3">6 </span><span class="s1">&amp;&amp; (gameA - gameB) &gt; </span><span class="s3">1</span><span class="s1">) { 
+                    setA = setA + </span><span class="s3">1</span><span class="s1">; 
+                    newSet(); 
+                } 
+            } 
+        } 
+ 
+    } 
+ 
+ 
+    </span><span class="s2">// * This method is called when Player A Point Won Button is pressed.</span><span class="s1"> 
+ 
+ 
+    </span><span class="s0">public void </span><span class="s1">scorePointA(View view) { 
+ 
+        incrementPointA(); 
+ 
+    } 
+ 
+ 
+    </span><span class="s2">// * This method is called to increment Player B Points Score is pressed.</span><span class="s1"> 
+ 
+ 
+    </span><span class="s0">public void </span><span class="s1">incrementPointB() { 
+ 
+        serveOutA = </span><span class="s3">0</span><span class="s1">; 
+        serveOutB = </span><span class="s3">0</span><span class="s1">; 
+        </span><span class="s0">if </span><span class="s1">(setTieBreak == </span><span class="s3">1</span><span class="s1">) { 
+            pointB = pointB + </span><span class="s3">1</span><span class="s1">; 
+            displayPointB(pointB); 
+            </span><span class="s0">if </span><span class="s1">(pointB &gt;= </span><span class="s3">7 </span><span class="s1">&amp;&amp; (pointB - pointA) &gt; </span><span class="s3">1</span><span class="s1">) { 
+                setB = setB + </span><span class="s3">1</span><span class="s1">; 
+                newSet(); 
+            } 
+ 
+        } </span><span class="s0">else if </span><span class="s1">(deuce == </span><span class="s3">1</span><span class="s1">) { 
+            pointB = pointB + </span><span class="s3">1</span><span class="s1">; 
+            </span><span class="s0">if </span><span class="s1">(pointB == </span><span class="s3">2</span><span class="s1">) { 
+                pointA = </span><span class="s3">0</span><span class="s1">; 
+                pointB = </span><span class="s3">0</span><span class="s1">; 
+                deuce = </span><span class="s3">0</span><span class="s1">; 
+                displayPointA(pointA); 
+                displayPointB(pointB); 
+                gameB = gameB + </span><span class="s3">1</span><span class="s1">; 
+                displayGameB(gameB); 
+                </span><span class="s0">if </span><span class="s1">(gameB == </span><span class="s3">6 </span><span class="s1">&amp;&amp; gameA == </span><span class="s3">6</span><span class="s1">) { 
+                    setTieBreak = </span><span class="s3">1</span><span class="s1">; 
+                } </span><span class="s0">else if </span><span class="s1">(gameB &gt;= </span><span class="s3">6 </span><span class="s1">&amp;&amp; (gameB - gameA) &gt; </span><span class="s3">1</span><span class="s1">) { 
+                    setB = setB + </span><span class="s3">1</span><span class="s1">; 
+                    newSet(); 
+                } 
+            } </span><span class="s0">else if </span><span class="s1">(pointA == </span><span class="s3">1</span><span class="s1">) { 
+                pointA = </span><span class="s3">40</span><span class="s1">; 
+                pointB = </span><span class="s3">40</span><span class="s1">; 
+                displayPointA(pointA); 
+                displayPointB(pointB); 
+                pointA = </span><span class="s3">0</span><span class="s1">; 
+                pointB = </span><span class="s3">0</span><span class="s1">; 
+            } </span><span class="s0">else </span><span class="s1">{ 
+                pointA = </span><span class="s3">0</span><span class="s1">; 
+                displayPointA(pointA); 
+                displayPointB(pointB); 
+            } 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            pointB = pointB + </span><span class="s3">15</span><span class="s1">; 
+            </span><span class="s0">if </span><span class="s1">(pointB == </span><span class="s3">45</span><span class="s1">) { 
+                pointB = </span><span class="s3">40</span><span class="s1">; 
+                </span><span class="s0">if </span><span class="s1">(pointA == </span><span class="s3">40</span><span class="s1">) { 
+                    displayPointA(pointA); 
+                    displayPointB(pointB); 
+                    pointA = </span><span class="s3">0</span><span class="s1">; 
+                    pointB = </span><span class="s3">0</span><span class="s1">; 
+                    deuce = </span><span class="s3">1</span><span class="s1">; 
+                } 
+                </span><span class="s0">else </span><span class="s1">{ 
+                    displayPointB(pointB); 
+                } 
+            } </span><span class="s0">else if </span><span class="s1">(pointB &lt; </span><span class="s3">55</span><span class="s1">) { 
+                        displayPointA(pointA); 
+                        displayPointB(pointB); 
+                    } </span><span class="s0">else </span><span class="s1">{ 
+                        pointB = </span><span class="s3">0</span><span class="s1">; 
+                        pointA = </span><span class="s3">0</span><span class="s1">; 
+                        displayPointB(pointB); 
+                        displayPointA(pointA); 
+                        gameB = gameB + </span><span class="s3">1</span><span class="s1">; 
+                        displayGameB(gameB); 
+                        </span><span class="s0">if </span><span class="s1">(gameB == </span><span class="s3">6 </span><span class="s1">&amp;&amp; gameA == </span><span class="s3">6</span><span class="s1">) { 
+                            setTieBreak = </span><span class="s3">1</span><span class="s1">; 
+                        } </span><span class="s0">else if </span><span class="s1">(gameB &gt;= </span><span class="s3">6 </span><span class="s1">&amp;&amp; (gameB - gameA) &gt; </span><span class="s3">1</span><span class="s1">) { 
+                            setB = setB + </span><span class="s3">1</span><span class="s1">; 
+                            newSet(); 
+                        } 
+                    } 
+                } 
+        } 
+ 
+ 
+ 
+    </span><span class="s2">// * This method is called when Player B Point Won Button is pressed.</span><span class="s1"> 
+ 
+ 
+    </span><span class="s0">public void </span><span class="s1">scorePointB(View view) { 
+ 
+ 
+        incrementPointB(); 
+ 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Displays Player A Points Score. 
+     */</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">displayPointA(</span><span class="s0">int </span><span class="s1">scoreA) { 
+        TextView scoreView = (TextView) findViewById(R.id.player_a_point); 
+        </span><span class="s0">if </span><span class="s1">(deuce == </span><span class="s3">1 </span><span class="s1">&amp;&amp; scoreA == </span><span class="s3">1</span><span class="s1">) { 
+            scoreView.setText(</span><span class="s4">&quot;ADV&quot;</span><span class="s1">); 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            scoreView.setText(String.valueOf(scoreA)); 
+        } 
+ 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Displays Player B Points Score. 
+     */</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">displayPointB(</span><span class="s0">int </span><span class="s1">scoreB) { 
+        TextView scoreView = (TextView) findViewById(R.id.player_b_point); 
+        </span><span class="s0">if </span><span class="s1">(deuce == </span><span class="s3">1 </span><span class="s1">&amp;&amp; scoreB == </span><span class="s3">1</span><span class="s1">) { 
+            scoreView.setText(</span><span class="s4">&quot;ADV&quot;</span><span class="s1">); 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            scoreView.setText(String.valueOf(scoreB)); 
+        } 
+ 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Displays Player A Games Score. 
+     */</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">displayGameA(</span><span class="s0">int </span><span class="s1">scoreA) { 
+        TextView scoreView = (TextView) findViewById(R.id.player_a_game); 
+        scoreView.setText(String.valueOf(scoreA)); 
+ 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Displays Player B Games Score. 
+     */</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">displayGameB(</span><span class="s0">int </span><span class="s1">scoreB) { 
+        TextView scoreView = (TextView) findViewById(R.id.player_b_game); 
+        scoreView.setText(String.valueOf(scoreB)); 
+ 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Displays Player A Set Score. 
+     */</span><span class="s1"> 
+ 
+    </span><span class="s0">public void </span><span class="s1">displaySetA(</span><span class="s0">int </span><span class="s1">scoreA) { 
+        TextView scoreView = (TextView) findViewById(R.id.player_a_set); 
+        scoreView.setText(String.valueOf(scoreA)); 
+ 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Displays Player B Set Score. 
+     */</span><span class="s1"> 
+ 
+    </span><span class="s0">public void </span><span class="s1">displaySetB(</span><span class="s0">int </span><span class="s1">scoreB) { 
+        TextView scoreView = (TextView) findViewById(R.id.player_b_set); 
+        scoreView.setText(String.valueOf(scoreB)); 
+ 
+ 
+    } 
+ 
+    </span><span class="s2">/** 
+     * This method is called when a set is won. 
+     */</span><span class="s1"> 
+ 
+    </span><span class="s0">public void </span><span class="s1">newSet() { 
+ 
+        gameA = </span><span class="s3">0</span><span class="s1">; 
+        gameB = </span><span class="s3">0</span><span class="s1">; 
+        pointA = </span><span class="s3">0</span><span class="s1">; 
+        pointB = </span><span class="s3">0</span><span class="s1">; 
+        displaySetA(setA); 
+        displaySetB(setB); 
+        displayPointA(pointA); 
+        displayPointB(pointB); 
+        displayGameA(gameA); 
+        displayGameB(gameB); 
+        setTieBreak = </span><span class="s3">0</span><span class="s1">; 
+ 
+ 
+    } 
+ 
+ 
+    </span><span class="s2">/** 
+     * This method is called when RESET button is pressed. 
+     */</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">resetScore(View view) { 
+ 
+        setA = </span><span class="s3">0</span><span class="s1">; 
+        setB = </span><span class="s3">0</span><span class="s1">; 
+        gameA = </span><span class="s3">0</span><span class="s1">; 
+        gameB = </span><span class="s3">0</span><span class="s1">; 
+        pointA = </span><span class="s3">0</span><span class="s1">; 
+        pointB = </span><span class="s3">0</span><span class="s1">; 
+        displayPointA(pointA); 
+        displayPointB(pointB); 
+        displayGameA(gameA); 
+        displayGameB(gameB); 
+        displaySetA(setA); 
+        displaySetB(setB); 
+    } 
+ 
+ 
+} 
+</span></pre>
+</body>
+</html>
